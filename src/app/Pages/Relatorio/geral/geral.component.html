@@ -1,0 +1,117 @@
+<div class="relatorio-container">
+  <div class="header">
+    <h1>Relatórios</h1>
+  </div>
+
+  <form [formGroup]="form" class="filtros-container">
+    <div class="filtros-grid">
+      <!-- Período -->
+      <div class="filtro-group">
+        <h3>Período</h3>
+        <div class="date-inputs">
+          <mat-form-field appearance="outline">
+            <mat-label>Data Início</mat-label>
+            <input matInput [matDatepicker]="pickerInicio" formControlName="dataInicio">
+            <mat-datepicker-toggle matSuffix [for]="pickerInicio"></mat-datepicker-toggle>
+            <mat-datepicker #pickerInicio></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Data Fim</mat-label>
+            <input matInput [matDatepicker]="pickerFim" formControlName="dataFim">
+            <mat-datepicker-toggle matSuffix [for]="pickerFim"></mat-datepicker-toggle>
+            <mat-datepicker #pickerFim></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- Status -->
+      <div class="filtro-group">
+        <h3>Status "de associação rampa"</h3>
+        <mat-form-field appearance="outline">
+          <mat-label>Selecione os status</mat-label>
+          <mat-select formControlName="status" multiple>
+            <mat-option *ngFor="let status of statusDisponiveis" [value]="status">
+              {{status}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <!-- Rampas -->
+      <div class="filtro-group">
+        <h3>Rampas</h3>
+        <mat-form-field appearance="outline">
+          <mat-label>Selecione as rampas</mat-label>
+          <mat-select formControlName="rampas" multiple>
+            <mat-option *ngFor="let rampa of rampasDisponiveis" [value]="rampa">
+              Rampa {{rampa}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- Colunas -->
+    <div class="colunas-section">
+      <div class="colunas-header">
+        <h3>Colunas do relatório</h3>
+        <div class="colunas-actions">
+          <button mat-button (click)="marcarTodasColunas()">Selecionar Todas</button>
+          <button mat-button (click)="desmarcarTodasColunas()">Desmarcar Todas</button>
+        </div>
+      </div>
+
+      <mat-form-field appearance="outline" class="colunas-field">
+        <!--<mat-label>Selecione as colunas</mat-label>-->
+        <mat-select formControlName="colunas" multiple>
+          <mat-option *ngFor="let coluna of colunasDisponiveis" [value]="coluna.campo">
+            {{coluna.titulo}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <!-- Ações -->
+    <div class="acoes">
+      <button mat-stroked-button (click)="limparFiltros()">
+        LIMPAR FILTROS
+      </button>
+      <button mat-raised-button color="primary" (click)="gerarRelatorio()">
+        GERAR RELATÓRIO
+      </button>
+      <button mat-raised-button
+              [disabled]="!dadosRelatorio.length"
+              (click)="downloadRelatorio()">
+        DOWNLOAD
+      </button>
+    </div>
+  </form>
+
+  <!-- Resultados -->
+  <div class="resultados-container" *ngIf="dadosRelatorio.length">
+    <table mat-table [dataSource]="dadosRelatorio">
+      <ng-container *ngFor="let coluna of colunasDisponiveis">
+        <ng-container [matColumnDef]="coluna.campo" *ngIf="displayedColumns.includes(coluna.campo)">
+          <th mat-header-cell *matHeaderCellDef>{{coluna.titulo}}</th>
+          <td mat-cell *matCellDef="let element">
+            <ng-container [ngSwitch]="coluna.tipo">
+              <span *ngSwitchCase="'data'">
+                {{element[coluna.campo] | date:'dd/MM/yyyy HH:mm'}}
+              </span>
+              <span *ngSwitchCase="'numero'">
+                {{element[coluna.campo] | number}}
+              </span>
+              <span *ngSwitchDefault>
+                {{element[coluna.campo]}}
+              </span>
+            </ng-container>
+          </td>
+        </ng-container>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+</div>

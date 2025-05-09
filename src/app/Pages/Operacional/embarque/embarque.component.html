@@ -1,0 +1,114 @@
+<div class="embarque-container">
+  <div class="header">
+    <h1>Rampa {{rampaId}} - Detalhamento do Embarque</h1>
+  </div>
+
+  <div class="info-card" *ngIf="embarqueInfo">
+    <div class="info-header">
+      <div class="title-section">
+        <h2>Nº EMBARQUE</h2>
+        <span class="value">{{embarqueInfo.numeroEmbarque}}</span>
+      </div>
+      <div class="stats-section">
+        <div class="stat-item">
+          <span class="label">Caixas alocadas</span>
+          <span class="value">{{embarqueInfo.caixasAlocadas}}</span>
+        </div>
+        <div class="stat-item">
+          <span class="label">SKUs esperados</span>
+          <span class="value">{{embarqueInfo.skusEsperados}}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="client-info">
+      <div class="info-row">
+        <span class="label">Cliente:</span>
+        <span class="value">{{embarqueInfo.cliente}}</span>
+      </div>
+      <div class="info-row">
+        <span class="label">Transportadora:</span>
+        <span class="value">{{embarqueInfo.transportadora}}</span>
+      </div>
+    </div>
+
+    <!-- Lista de Pick Requests associados -->
+    <!--<div class="pick-requests-container" *ngIf="embarqueInfo.pickRequests && embarqueInfo.pickRequests.length > 1">
+      <h3>Pick Requests Associados</h3>
+      <div class="pick-requests-list">
+        <div class="pick-request-item" *ngFor="let pr of embarqueInfo.pickRequests">
+          <span class="pr-number">{{pr.numeroEmbarque}}</span>
+          <div class="pr-info">
+            <span class="pr-label">Stop ID:</span>
+            <span class="pr-value">{{pr.stopId}}</span>
+          </div>
+          <div class="pr-info">
+            <span class="pr-label">CAR Move ID:</span>
+            <span class="pr-value">{{pr.carMoveId}}</span>
+          </div>
+        </div>
+      </div>
+    </div>-->
+
+    <div class="customization">
+      <h3>Customização</h3>
+      <ul>
+        <li *ngFor="let custom of embarqueInfo.customizacao">{{custom}}</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="progress-section" *ngIf="embarqueInfo">
+    <div class="progress-bar">
+      <div class="progress" [style.width.%]="getProgressoTotal()"></div>
+    </div>
+    <span class="progress-label">{{getProgressoTotal() | number:'1.0-0'}}% Concluído</span>
+  </div>
+
+  <div class="table-container" *ngIf="embarqueInfo">
+    <table>
+      <thead>
+        <tr>
+          <th>SKU</th>
+          <th>QNTD. ESPERADA</th>
+          <th>QNTD. RECEBIDA</th>
+          <th>TEMPO DESDE A ÚLTIMA CAIXA (min)</th>
+          <th>DESCRIÇÃO</th>
+          <th>QNTD. REJEITO FINAL</th>
+          <th>LPN</th> <!-- Nova coluna para identificar o pick request -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of embarqueInfo.itens">
+          <td>{{item.sku}}</td>
+          <td>{{item.quantidadeEsperada}}</td>
+          <td>{{item.quantidadeRecebida}}</td>
+          <td [ngClass]="{'alert': item.tempoUltimaCaixa > 30}">
+            {{item.tempoUltimaCaixa}}
+          </td>
+          <td>{{item.descricao}}</td>
+          <td [ngClass]="{'warning': item.quantidadeRejeitoFinal > 0}">
+            {{item.quantidadeRejeitoFinal}}
+          </td>
+          <td>
+            <!-- Mostrar qual pick request o item pertence -->
+            <ng-container *ngIf="embarqueInfo.pickRequests.length > 1">
+              {{getPickRequestEmbarque(item.pickRequestId)}}
+            </ng-container>
+            <ng-container *ngIf="embarqueInfo.pickRequests.length <= 1">-</ng-container>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Adicionar botão de finalizar embarque -->
+  <div class="actions-section" *ngIf="embarqueInfo">
+    <button mat-raised-button
+            color="primary"
+            class="concluir-button"
+            (click)="concluirEmbarque()">
+      CONCLUIR EMBARQUE
+    </button>
+  </div>
+</div>

@@ -1,0 +1,199 @@
+.embarque-container {
+  padding: var(--spacing-lg);
+  background-color: var(--background-light);
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  font-family: var(--font-family);
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-xl);
+
+    h1 {
+      color: var(--primary);
+      margin: 0;
+      font-size: var(--font-size-xl);
+      font-weight: bold;
+    }
+  }
+
+  .info-card {
+    background-color: #333;
+    color: white;
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius-sm);
+    margin-bottom: var(--spacing-lg);
+
+    .info-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: var(--spacing-lg);
+
+      .title-section {
+        h2 {
+          margin: 0;
+          color: #fff;
+          font-size: var(--font-size-base);
+          font-weight: normal;
+          margin-bottom: var(--spacing-xs);
+        }
+
+        .value {
+          font-size: calc(var(--font-size-xl) * 1.2);
+          font-weight: bold;
+          color: #fff;
+        }
+      }
+
+      .stats-section {
+        display: flex;
+        gap: var(--spacing-xl);
+        text-align: right;
+
+        .stat-item {
+          .label {
+            display: block;
+            font-size: var(--font-size-sm);
+            color: #aaa;
+            margin-bottom: var(--spacing-xs);
+          }
+
+          .value {
+            display: block;
+            font-size: var(--font-size-lg);
+            font-weight: bold;
+            color: #fff;
+          }
+        }
+      }
+    }
+
+    .client-info {
+      margin: var(--spacing-lg) 0;
+
+      .info-row {
+        display: flex;
+        margin-bottom: var(--spacing-sm);
+
+        .label {
+          color: #aaa;
+          width: 120px;
+        }
+
+        .value {
+          color: #fff;
+        }
+      }
+    }
+
+    .customization {
+      h3 {
+        color: #aaa;
+        font-size: var(--font-size-base);
+        margin: 0 0 var(--spacing-sm) 0;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        color: #fff;
+
+        li {
+          padding: var(--spacing-xs) 0;
+        }
+      }
+    }
+  }
+
+  .progress-section {
+    margin: var(--spacing-lg) 0;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+
+    .progress-bar {
+      flex-grow: 1;
+      height: 8px;
+      background: var(--progress-bg);
+      border-radius: var(--border-radius-sm);
+      overflow: hidden;
+
+      .progress {
+        height: 100%;
+        background: var(--primary);
+        transition: width 0.3s ease;
+      }
+    }
+
+    .progress-label {
+      font-size: var(--font-size-base);
+      color: var(--text-primary);
+      font-weight: 500;
+      background: var(--primary);
+      padding: var(--spacing-xs) var(--spacing-md);
+      border-radius: var(--border-radius-sm);
+      min-width: 90px;
+      text-align: center;
+    }
+  }
+
+  .table-container {
+    background: white;
+    border-radius: var(--border-radius-sm);
+    overflow: hidden;
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+
+      th {
+        background-color: var(--primary);
+        color: var(--text-primary);
+        font-weight: 500;
+        padding: var(--spacing-md);
+        text-align: left;
+        white-space: nowrap;
+      }
+
+      td {
+        background: #424242;
+        color: white;
+        padding: var(--spacing-md);
+        border-bottom: 1px solid #555;
+
+        &.alert {
+          color: var(--danger-color);
+        }
+
+        &.warning {
+          color: var(--warning-color);
+        }
+      }
+
+      tr:hover td {
+        background: #484848;
+      }
+    }
+  }
+}
+
+// Ajustes específicos para telas pequenas
+@media (max-width: 768px) {
+  .embarque-container {
+    .info-card {
+      .info-header {
+        flex-direction: column;
+
+        .stats-section {
+          margin-top: var(--spacing-lg);
+          width: 100%;
+          justify-content: space-between;
+        }
+      }
+    }
+  }
+}

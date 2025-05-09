@@ -1,0 +1,76 @@
+<div class="triagem-container">
+  <div class="header">
+    <h1>Triagem manual</h1>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="confirmar()">
+    <!-- Passo 1: Entrada do SKU -->
+    <div class="step-container">
+      <h2>Número do SKU</h2>
+      <p class="step-description">Scanear o produto ou digitar o número do SKU (teste: 12345678)</p>
+      <mat-label>Digite ou escaneie o SKU</mat-label>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <input matInput
+               formControlName="sku"
+               [maxlength]="20">
+        <mat-spinner matSuffix diameter="20" *ngIf="carregandoSku"></mat-spinner>
+      </mat-form-field>
+    </div>
+
+    <!-- Informações do SKU e destinos -->
+    <div class="info-container" *ngIf="skuInfo">
+      <div class="sku-info">
+        <h3>SKU {{skuInfo.sku}}</h3>
+        <p class="description">{{skuInfo.descricao}}</p>
+      </div>
+
+      <div class="destinations">
+        <h3>Informações do destino</h3>
+        <div class="destination-grid">
+          <div *ngFor="let destino of skuInfo.destinos"
+               class="destination-card"
+               [class.selected]="rampaAtual === destino.rampa"
+               (click)="selecionarRampa(destino.rampa)">
+            <div class="rampa-number">Rampa {{destino.rampa}}</div>
+            <div class="caixas-number">{{destino.caixas}} caixas</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Seleção de lote -->
+      <div class="lote-container" *ngIf="rampaAtual">
+        <h3>Número do lote</h3>
+        <mat-form-field appearance="outline">
+          <mat-select formControlName="lote">
+            <mat-option *ngFor="let lote of lotes" [value]="lote">
+              {{lote}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <!-- Quantidade -->
+      <div class="quantidade-container" *ngIf="form.get('lote')!.value">
+        <h3>Quantidade</h3>
+        <mat-form-field appearance="outline">
+          <input matInput
+                 type="number"
+                 formControlName="quantidade"
+                 min="1">
+        </mat-form-field>
+      </div>
+
+      <!-- Botões de ação -->
+      <div class="actions">
+        <button mat-button type="button" (click)="form.reset()">VOLTAR</button>
+        <button mat-raised-button
+                color="primary"
+                type="submit"
+                [disabled]="form.invalid">
+          CONFIRMAR
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

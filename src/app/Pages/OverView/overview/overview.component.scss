@@ -1,0 +1,125 @@
+/* overview.component.scss */
+.dashboard-container {
+  padding: var(--spacing-lg);
+  background-color: var(--background-light);
+  min-height: 100vh;
+  font-family: var(--font-family);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: calc(var(--spacing-xl) + 5px);
+  background-color: white;
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-sm);
+  box-shadow: var(--box-shadow);
+
+  .logo-container {
+    display: flex;
+    gap: var(--spacing-lg);
+    align-items: center;
+
+    .logo {
+      height: 40px;
+      width: auto;
+    }
+  }
+
+  h1 {
+    font-size: var(--font-size-xl);
+    color: var(--text-secondary);
+  }
+}
+
+.main-content {
+  display: grid;
+  gap: var(--spacing-lg);
+}
+
+.production-chart {
+  background-color: white;
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius-sm);
+  box-shadow: var(--box-shadow);
+  margin: var(--spacing-md) 0;
+
+  h2 {
+    margin-bottom: var(--spacing-lg);
+    color: var(--text-secondary);
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+  }
+}
+
+.chart-container {
+  position: relative;
+  height: 450px;
+  width: 100%;
+}
+
+.chart-legend.custom {
+  display: flex;
+  justify-content: center;
+  gap: calc(var(--spacing-xl) + 5px);
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-md);
+  border-top: 1px solid #eee;
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+
+    .legend-color {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+
+      &.planned {
+        background-color: #2196F3;
+      }
+
+      &.produced {
+        background-color: #4CAF50;
+      }
+
+      &.rejected {
+        background-color: #FF5722;
+      }
+
+      &.capacity {
+        background-color: #9E9E9E;
+      }
+    }
+  }
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-lg);
+
+  .metric-card {
+    background-color: white;
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius-sm);
+    box-shadow: var(--box-shadow);
+    text-align: center;
+
+    h3 {
+      color: #666;
+      font-size: var(--font-size-base);
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .metric-value {
+      font-size: var(--font-size-xl);
+      font-weight: bold;
+      color: var(--text-secondary);
+    }
+  }
+}

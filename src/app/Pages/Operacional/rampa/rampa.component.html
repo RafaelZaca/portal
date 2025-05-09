@@ -1,0 +1,55 @@
+<div class="rampa-container">
+  <div class="header">
+    <h1>Gestão de embarque</h1>
+  </div>
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Nº DA RAMPA</th>
+          <th>Nº EMBARQUE</th>
+          <th>CLIENTE</th>
+          <th>STATUS</th>
+          <th>QUANTIDADE SOLICITADA</th>
+          <th>QUANTIDADE SEPARADA</th>
+          <th>ITENS PENDENTES</th>
+          <th>% ATENDIDO</th>
+          <th>AÇÕES</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let rampa of rampas">
+          <td>{{rampa.numero | number:'2.0-0'}}</td>
+          <td>{{rampa.numeroEmbarque || '-'}}</td>
+          <td>{{rampa.cliente || '-'}}</td>
+          <td>
+            <span class="status-badge" [ngClass]="getStatusClass(rampa.status)">
+              {{rampa.status}}
+            </span>
+          </td>
+          <td>{{rampa.quantidadeSolicitada | number}}</td>
+          <td>{{rampa.quantidadeSeparada | number}}</td>
+          <td [ngClass]="{'alert': rampa.itensPendentes !== 0}">
+            {{rampa.itensPendentes | number}}
+          </td>
+          <td>{{rampa.percentualAtendido | number:'1.1-1'}}%</td>
+          <td>
+            <button *ngIf="rampa.status !== 'Vazio'"
+                    class="btn-concluir"
+                    (click)="concluirEmbarque(rampa)"
+                    [disabled]="rampa.status === 'Completo'">
+              Concluir embarque
+            </button>
+            <button *ngIf="rampa.status !== 'Vazio'"
+                    class="btn-imprimir"
+                    (click)="concluirEmbarque(rampa)"
+                    [disabled]="rampa.status === 'Completo'">
+              Imprimir Etiqueta
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

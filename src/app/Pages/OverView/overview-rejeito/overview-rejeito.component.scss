@@ -1,0 +1,70 @@
+.rejeito-container {
+  padding: var(--spacing-xl);
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  font-family: var(--font-family);
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-xl);
+
+    h1 {
+      font-size: var(--font-size-xl);
+      font-weight: bold;
+      color: var(--primary);
+      margin: 0;
+    }
+  }
+
+  .table-container {
+    margin: var(--spacing-lg) 0;
+    overflow-x: auto;
+    border-radius: var(--border-radius-sm);
+  }
+
+  table {
+    width: 100%;
+
+    th.mat-header-cell,
+    td.mat-cell,
+    td.mat-footer-cell {
+      padding: 0 var(--spacing-sm);
+      text-align: center;
+
+      &:first-child {
+        text-align: left;
+        padding-left: calc(var(--spacing-lg) + var(--spacing-xs));
+      }
+
+      &:last-child {
+        padding-right: calc(var(--spacing-lg) + var(--spacing-xs));
+      }
+    }
+
+    td.mat-cell {
+      font-size: var(--font-size-sm);
+    }
+
+    th.mat-header-cell {
+      background-color: var(--background-light);
+      font-weight: bold;
+      color: var(--primary);
+      font-size: calc(var(--font-size-sm) - 2px);
+    }
+
+    tr.mat-footer-row {
+      font-weight: bold;
+      background-color: var(--background-light);
+    }
+
+    td.mat-footer-cell {
+      color: var(--primary);
+    }
+  }
+  // Adiciona uma borda sutil entre as colunas
+  .mat-column-divider {
+    border-right: 1px solid var(--progress-bg);
+  }
+}

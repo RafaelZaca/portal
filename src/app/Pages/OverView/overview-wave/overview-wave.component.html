@@ -1,0 +1,117 @@
+<div class="dashboard-container">
+  <h1 class="dashboard-title">Overview | wave</h1>
+
+  <div class="dashboard-grid">
+    <!-- Allocated Boxes -->
+    <div class="dashboard-card">
+      <h2 class="card-title">Caixas alocadas</h2>
+      <div class="metric-value">{{data.allocatedBoxes.total}}</div>
+      <div class="progress-container">
+        <div class="progress-bar" [style.width]="getProgressWidth(data.allocatedBoxes.separated, data.allocatedBoxes.total)"></div>
+      </div>
+      <div class="progress-labels">
+        <span>Separado: {{data.allocatedBoxes.separated}}</span>
+        <span>Pendente: {{data.allocatedBoxes.pending}}</span>
+      </div>
+    </div>
+
+    <!-- Expected SKUs -->
+    <div class="dashboard-card">
+      <h2 class="card-title">SKUs esperados</h2>
+      <div class="metric-value">{{data.expectedSkus.total}}</div>
+      <div class="progress-container">
+        <div class="progress-bar" [style.width]="getProgressWidth(data.expectedSkus.separated, data.expectedSkus.total)"></div>
+      </div>
+      <div class="progress-labels">
+        <span>Separado: {{data.expectedSkus.separated}}</span>
+        <span>Pendente: {{data.expectedSkus.pending}}</span>
+      </div>
+    </div>
+
+    <!-- Productivity -->
+    <div class="dashboard-card productivity-card">
+      <h2 class="card-title">PRODUTIVIDADE ATUAL</h2>
+      <div class="productivity-gauge">
+        <div class="gauge-value">
+          <span class="value">{{data.productivity}}</span>
+          <span class="unit">CX/H</span>
+        </div>
+        <svg viewBox="0 0 100 100">
+          <path class="gauge-background" d="M 50 50 m 0 -45 a 45 45 0 1 1 0 90 a 45 45 0 1 1 0 -90" />
+          <path class="gauge-progress" d="M 50 50 m 0 -45 a 45 45 0 1 1 0 90 a 45 45 0 1 1 0 -90" />
+        </svg>
+      </div>
+    </div>
+
+    <!-- Allocated Shipments -->
+    <div class="dashboard-card small-card">
+      <h2 class="card-title">Embarques alocados</h2>
+      <div class="metric-value">{{data.allocatedShipments}}</div>
+    </div>
+
+    <!-- Active Operators -->
+    <div class="dashboard-card">
+      <h2 class="card-title">Operadores em atividade</h2>
+      <div class="metric-value">{{data.activeOperators}}</div>
+      <div class="list-container">
+        <div class="list-item" *ngFor="let item of data.operatorActivities">
+          <span>{{item.type}}</span>
+          <span class="value">{{item.value}}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Shipment Types -->
+    <div class="dashboard-card">
+      <h2 class="card-title">Tipos de embarques</h2>
+      <div class="list-container">
+        <div class="list-item" *ngFor="let item of data.shipmentTypes">
+          <span>{{item.type}}</span>
+          <span class="value">{{item.value}}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Read Rejection -->
+    <div class="dashboard-card">
+      <h2 class="card-title">Rejeito no read</h2>
+      <div class="list-container">
+        <div class="list-item">
+          <span>Total rejeitado</span>
+          <span class="value total">{{data.readRejection.totalRejected}}</span>
+        </div>
+        <div class="list-item">
+          <span>Tratado</span>
+          <span class="value treated">{{data.readRejection.treated}}</span>
+        </div>
+        <div class="list-item">
+          <span>Pendente</span>
+          <span class="value pending">{{data.readRejection.pending}}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Excess Rejection -->
+    <div class="dashboard-card">
+      <h2 class="card-title">Rejeito</h2>
+      <div class="list-container">
+        <div class="list-item">
+          <span>Total</span>
+          <span class="value total">{{data.excessRejection.total}}</span>
+        </div>
+        <div class="list-item">
+          <span>Não previsto</span>
+          <span class="value">{{data.excessRejection.notExpected}}</span>
+        </div>
+        <div class="list-item">
+          <span>Excesso</span>
+          <span class="value">{{data.excessRejection.excess}}</span>
+        </div>
+        <div class="list-item">
+          <span>Rampa cheia</span>
+          <span class="value">{{data.excessRejection.fullRamp}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

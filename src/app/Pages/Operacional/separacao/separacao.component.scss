@@ -1,0 +1,111 @@
+.separacao-container {
+  padding: var(--spacing-lg);
+  background-color: var(--background-light);
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  font-family: var(--font-family);
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-xl);
+
+    h1 {
+      color: var(--primary);
+      margin: 0;
+      font-size: var(--font-size-xl);
+      font-weight: bold;
+    }
+  }
+
+  .status-cards {
+    display: flex;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+
+    .status-card {
+      background: #333;
+      padding: var(--spacing-lg);
+      border-radius: var(--border-radius-sm);
+      flex: 1;
+      color: white;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .label {
+        color: #aaa;
+        font-size: var(--font-size-sm);
+        margin-bottom: var(--spacing-sm);
+      }
+
+      .value {
+        font-size: calc(var(--font-size-xl) * 1.3);
+        font-weight: bold;
+        margin-bottom: var(--spacing-sm);
+      }
+
+      .sub-label {
+        color: #aaa;
+        font-size: calc(var(--font-size-sm) * 0.9);
+      }
+    }
+  }
+
+  .table-container {
+    background: white;
+    border-radius: var(--border-radius-sm);
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+
+      th {
+        background-color: var(--primary);
+        color: var(--text-primary);
+        font-weight: 500;
+        padding: var(--spacing-md);
+        text-align: left;
+        white-space: nowrap;
+        font-size: var(--font-size-sm);
+      }
+
+      td {
+        background: #424242;
+        color: white;
+        padding: var(--spacing-md);
+        border-bottom: 1px solid #555;
+        font-size: var(--font-size-sm);
+
+        &.alert {
+          color: var(--danger-color);
+          font-weight: bold;
+        }
+
+        &.warning {
+          color: var(--warning-color);
+          font-weight: bold;
+        }
+      }
+
+      tr:hover td {
+        background: #484848;
+      }
+    }
+  }
+}
+
+// Ajustes para rolagem horizontal em telas menores
+@media (max-width: 1200px) {
+  .table-container {
+    overflow-x: auto;
+
+    table {
+      min-width: 1200px;
+    }
+  }
+}

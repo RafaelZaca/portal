@@ -1,0 +1,59 @@
+<div class="rejeito-container">
+  <div class="header">
+    <h1>Detalhamento | Rejeito final</h1>
+  </div>
+
+  <div class="table-container mat-elevation-z8">
+    <table mat-table [dataSource]="rejeitoItems">
+      <!-- SKU Column -->
+      <ng-container matColumnDef="sku">
+        <th mat-header-cell *matHeaderCellDef>SKU</th>
+        <td mat-cell *matCellDef="let element" [matTooltip]="element.descricao">
+          {{element.sku}}
+        </td>
+        <td mat-footer-cell *matFooterCellDef>Total</td>
+      </ng-container>
+
+      <!-- Wave Column -->
+      <ng-container matColumnDef="wave">
+        <th mat-header-cell *matHeaderCellDef>WAVE</th>
+        <td mat-cell *matCellDef="let element">{{element.wave}}</td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <!-- Total Rejeito Column -->
+      <ng-container matColumnDef="totalRejeito">
+        <th mat-header-cell *matHeaderCellDef>TOTAL REJEITO</th>
+        <td mat-cell *matCellDef="let element">{{element.totalRejeito}}</td>
+        <td mat-footer-cell *matFooterCellDef>{{getTotalRejeitos()}}</td>
+      </ng-container>
+
+      <!-- Rampa Columns -->
+      <ng-container *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,11,12]">
+        <ng-container [matColumnDef]="'rampa' + (i < 10 ? '0' + i : i)">
+          <th mat-header-cell *matHeaderCellDef>RAMPA {{i}}</th>
+          <td mat-cell *matCellDef="let element">{{element['rampa' + (i < 10 ? '0' + i : i)]}}</td>
+          <td mat-footer-cell *matFooterCellDef>{{getRampaTotalRejeitos(i)}}</td>
+        </ng-container>
+      </ng-container>
+
+      <!-- Não Previsto Column -->
+      <ng-container matColumnDef="naoPrevisto">
+        <th mat-header-cell *matHeaderCellDef>NÃO PREVISTO</th>
+        <td mat-cell *matCellDef="let element">{{element.naoPrevisto}}</td>
+        <td mat-footer-cell *matFooterCellDef>{{getTotalNaoPrevisto()}}</td>
+      </ng-container>
+
+      <!-- Excesso Column -->
+      <ng-container matColumnDef="excesso">
+        <th mat-header-cell *matHeaderCellDef>EXCESSO</th>
+        <td mat-cell *matCellDef="let element">{{element.excesso}}</td>
+        <td mat-footer-cell *matFooterCellDef>{{getTotalExcesso()}}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+    </table>
+  </div>
+</div>

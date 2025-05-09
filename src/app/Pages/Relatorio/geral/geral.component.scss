@@ -1,0 +1,198 @@
+.relatorio-container {
+  padding: var(--spacing-lg);
+  background-color: var(--background-light);
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  font-family: var(--font-family);
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-xl);
+
+    h1 {
+      color: var(--primary);
+      margin: 0;
+      font-size: var(--font-size-xl);
+      font-weight: bold;
+    }
+  }
+
+  .filtros-container {
+    background: var(--dark-bg-primary, #424242);
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius-sm);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .filtros-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+
+    .filtro-group {
+      h3 {
+        color: white;
+        margin: 0 0 var(--spacing-md) 0;
+        font-size: var(--font-size-base);
+        font-weight: 500;
+      }
+
+      .date-inputs {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing-md);
+      }
+    }
+  }
+
+  .colunas-section {
+    margin-bottom: var(--spacing-lg);
+
+    .colunas-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--spacing-md);
+
+      h3 {
+        color: white;
+        margin: 0;
+        font-size: var(--font-size-base);
+        font-weight: 500;
+      }
+
+      .colunas-actions {
+        display: flex;
+        gap: var(--spacing-sm);
+
+        button {
+          color: white;
+        }
+      }
+    }
+
+    .colunas-field {
+      width: 100%;
+    }
+  }
+
+  .acoes {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-md);
+  }
+
+  .resultados-container {
+    background: white;
+    border-radius: var(--border-radius-sm);
+    overflow: hidden;
+    margin-top: var(--spacing-lg);
+    box-shadow: var(--box-shadow);
+
+    table {
+      width: 100%;
+
+      th {
+        background-color: var(--primary);
+        color: var(--text-primary);
+        font-weight: 500;
+        padding: var(--spacing-md);
+        text-align: left;
+        white-space: nowrap;
+      }
+
+      td {
+        background: var(--dark-bg-primary, #424242);
+        color: white;
+        padding: var(--spacing-md);
+        border-bottom: 1px solid var(--dark-border, #555);
+      }
+
+      tr:hover td {
+        background: var(--dark-bg-hover, #484848);
+      }
+    }
+  }
+  // Estilização dos componentes Material
+  ::ng-deep {
+    .mat-mdc-form-field {
+      width: 100%;
+
+      .mat-mdc-form-field-flex {
+        background-color: white;
+        border-radius: var(--border-radius-sm);
+      }
+
+      .mat-mdc-text-field-wrapper {
+        background-color: white;
+      }
+
+      .mat-mdc-form-field-infix {
+        color: var(--text-secondary);
+      }
+
+      input.mat-mdc-input-element,
+      .mat-mdc-select-value-text {
+        color: var(--text-secondary);
+      }
+
+      .mat-mdc-select-arrow {
+        color: var(--text-secondary);
+      }
+
+      .mat-mdc-form-field-label {
+        color: rgba(0, 0, 0, 0.6);
+      }
+
+      .mat-mdc-select-panel {
+        background: white;
+
+        .mat-mdc-option {
+          color: var(--text-secondary);
+
+          &.mat-mdc-option-active {
+            background: rgba(0, 0, 0, 0.04);
+          }
+
+          &.mat-mdc-selected {
+            background: rgba(var(--primary-rgb, 0, 61, 165), 0.1);
+            color: var(--primary);
+          }
+        }
+      }
+    }
+
+    .mat-datepicker-toggle {
+      color: var(--text-secondary);
+    }
+
+    .mat-calendar {
+      background: white;
+    }
+  }
+  // Responsividade
+  @media (max-width: 768px) {
+    .filtros-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .acoes {
+      flex-direction: column;
+
+      button {
+        width: 100%;
+      }
+    }
+
+    .resultados-container {
+      overflow-x: auto;
+
+      table {
+        min-width: 800px;
+      }
+    }
+  }
+}

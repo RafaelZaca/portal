@@ -1,0 +1,220 @@
+.triagem-container {
+  padding: var(--spacing-lg);
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: var(--font-family);
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-xl);
+
+    h1 {
+      color: var(--primary);
+      margin: 0;
+      font-size: var(--font-size-xl);
+      font-weight: bold;
+    }
+  }
+
+  .step-container {
+    background: #424242;
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius-sm);
+    margin-bottom: var(--spacing-lg);
+
+    h2 {
+      color: white;
+      margin: 0 0 var(--spacing-sm) 0;
+      font-size: var(--font-size-lg);
+      font-weight: 500;
+    }
+
+    .step-description {
+      color: #aaa;
+      margin: 0 0 var(--spacing-md) 0;
+      font-size: var(--font-size-sm);
+    }
+  }
+
+  .info-container {
+    background: #424242;
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius-sm);
+
+    .sku-info {
+      margin-bottom: var(--spacing-lg);
+
+      h3 {
+        color: white;
+        margin: 0 0 var(--spacing-sm) 0;
+        font-size: var(--font-size-base);
+      }
+
+      .description {
+        color: #aaa;
+        margin: 0;
+      }
+    }
+
+    .destinations {
+      h3 {
+        color: white;
+        margin: 0 0 var(--spacing-md) 0;
+        font-size: var(--font-size-base);
+      }
+
+      .destination-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: var(--spacing-md);
+        margin-bottom: var(--spacing-lg);
+
+        .destination-card {
+          background: #333;
+          padding: var(--spacing-md);
+          border-radius: var(--border-radius-sm);
+          cursor: pointer;
+          transition: all 0.2s;
+          border: 2px solid transparent;
+
+          &:hover {
+            background: #383838;
+          }
+
+          &.selected {
+            border-color: var(--primary);
+            background: #383838;
+          }
+
+          .rampa-number {
+            color: white;
+            font-weight: 500;
+            margin-bottom: var(--spacing-sm);
+          }
+
+          .caixas-number {
+            color: #aaa;
+            font-size: var(--font-size-sm);
+          }
+        }
+      }
+    }
+
+    .lote-container,
+    .quantidade-container {
+      margin-bottom: var(--spacing-lg);
+
+      h3 {
+        color: white;
+        margin: 0 0 var(--spacing-sm) 0;
+        font-size: var(--font-size-base);
+      }
+    }
+
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: var(--spacing-md);
+    }
+  }
+  // Estilização dos componentes Material
+  ::ng-deep {
+    .mat-mdc-form-field {
+      width: 100%;
+
+      .mat-mdc-form-field-flex {
+        background-color: white;
+        border-radius: var(--border-radius-sm);
+        padding: 0.75em 0.75em 0 0.75em;
+      }
+
+      .mdc-text-field {
+        background-color: white;
+        padding: var(--spacing-sm);
+      }
+
+      .mat-mdc-form-field-infix {
+        color: var(--text-secondary);
+        padding: 0.5em 0;
+        min-height: 42px;
+      }
+
+      input.mat-mdc-input-element,
+      .mat-mdc-select-value-text {
+        color: var(--text-secondary);
+      }
+
+      .mat-mdc-select-value {
+        color: var(--text-secondary);
+      }
+
+      .mat-mdc-select-arrow {
+        color: var(--text-secondary);
+      }
+
+      .mat-mdc-form-field-label {
+        color: rgba(0, 0, 0, 0.6);
+      }
+
+      .mdc-text-field--outlined {
+        --mdc-outlined-text-field-outline-color: #ccc;
+      }
+
+      .mat-mdc-select-panel {
+        background: white;
+
+        .mat-mdc-option {
+          color: var(--text-secondary);
+
+          &.mat-mdc-option-active,
+          &:hover {
+            background: rgba(0, 0, 0, 0.04);
+          }
+
+          &.mat-mdc-selected {
+            background: rgba(var(--primary), 0.1);
+            color: var(--primary);
+          }
+        }
+      }
+    }
+
+    .mat-mdc-form-field-subscript-wrapper {
+      height: 0;
+    }
+
+    .mat-mdc-text-field-wrapper {
+      height: auto;
+      padding: 0;
+    }
+
+    .mdc-text-field--outlined .mdc-notched-outline .mdc-notched-outline__leading {
+      border-radius: var(--border-radius-sm) 0 0 var(--border-radius-sm);
+    }
+
+    .mdc-text-field--outlined .mdc-notched-outline .mdc-notched-outline__trailing {
+      border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
+    }
+  }
+}
+
+// Responsividade
+@media (max-width: 600px) {
+  .triagem-container {
+    .destinations {
+      .destination-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .actions {
+      flex-direction: column;
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+}

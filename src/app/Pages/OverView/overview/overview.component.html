@@ -1,0 +1,80 @@
+<!-- overview.component.html -->
+<div class="dashboard-container">
+  <header class="header">
+    <div class="logo-container">
+      <img src="assets/logo.png" alt="P&G Logo" class="logo">
+    </div>
+    <h1>WCS - Itatiaia – Rio de Janeiro</h1>
+  </header>
+
+  <div class="main-content">
+  <div class="production-chart">
+  <h2>PRODUÇÃO HORA A HORA</h2>
+  <div class="chart-container">
+    <ngx-charts-line-chart [view]="view"
+                           [scheme]="colorScheme"
+                           [results]="productionData"
+                           [gradient]="false"
+                           [xAxis]="xAxis"
+                           [yAxis]="yAxis"
+                           [legend]="legend"
+                           [showXAxisLabel]="showXAxisLabel"
+                           [showYAxisLabel]="showYAxisLabel"
+                           [xAxisLabel]="xAxisLabel"
+                           [yAxisLabel]="yAxisLabel"
+                           [autoScale]="autoScale"
+                           [animations]="animations"
+                           (select)="onSelect($event)"
+                           (activate)="onActivate($event)"
+                           (deactivate)="onDeactivate($event)">
+    </ngx-charts-line-chart>
+
+    <div class="chart-legend custom">
+      <span class="legend-item">
+        <span class="legend-color planned"></span>
+        Planejado
+      </span>
+      <span class="legend-item">
+        <span class="legend-color produced"></span>
+        Produzido
+      </span>
+      <span class="legend-item">
+        <span class="legend-color rejected"></span>
+        Rejeito
+      </span>
+      <span class="legend-item">
+        <span class="legend-color capacity"></span>
+        Capacidade
+      </span>
+    </div>
+  </div>
+</div>
+
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <h3>Caixas Processadas</h3>
+        <p class="metric-value">{{summary.processedBoxes | number}}</p>
+      </div>
+      <div class="metric-card">
+        <h3>Caixas Rejeitadas</h3>
+        <p class="metric-value">{{summary.rejectedBoxes | number}}</p>
+      </div>
+      <div class="metric-card">
+        <h3>Horas em Operação</h3>
+        <p class="metric-value">{{summary.operatingHours | number:'1.1-1'}}</p>
+      </div>
+      <div class="metric-card">
+        <h3>Horas Paradas</h3>
+        <p class="metric-value">{{summary.stoppedHours | number:'1.1-1'}}</p>
+      </div>
+      <div class="metric-card">
+        <h3>Waves</h3>
+        <p class="metric-value">{{summary.waves}}</p>
+      </div>
+      <div class="metric-card">
+        <h3>Embarques</h3>
+        <p class="metric-value">{{summary.shipments}}</p>
+      </div>
+    </div>
+  </div>
+</div>

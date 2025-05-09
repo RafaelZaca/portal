@@ -1,0 +1,117 @@
+<!-- grupo.component.html -->
+<div class="grupo-container">
+  <div class="header">
+    <h1>Cadastro de Grupos</h1>
+    <button mat-raised-button
+            color="primary"
+            *ngIf="!modoEdicao"
+            (click)="novoGrupo()">
+      NOVO GRUPO
+    </button>
+  </div>
+
+  <div class="content-wrapper">
+    <!-- Lista de Grupos -->
+    <div class="lista-container" [@slideAnimation]="slideState" *ngIf="!modoEdicao">
+      <table mat-table [dataSource]="grupos">
+        <ng-container matColumnDef="nome">
+          <th mat-header-cell *matHeaderCellDef>Nome</th>
+          <td mat-cell *matCellDef="let grupo">{{grupo.nome}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="descricao">
+          <th mat-header-cell *matHeaderCellDef>Descrição</th>
+          <td mat-cell *matCellDef="let grupo">{{grupo.descricao}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="permissoes">
+          <th mat-header-cell *matHeaderCellDef>Permissões</th>
+          <td mat-cell *matCellDef="let grupo">
+            {{getPermissoesDisplay(grupo.permissoes)}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="usuariosVinculados">
+          <th mat-header-cell *matHeaderCellDef>Usuários</th>
+          <td mat-cell *matCellDef="let grupo">{{grupo.usuariosVinculados}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="ativo">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let grupo">
+            <span class="status-badge" [class.ativo]="grupo.ativo" [class.inativo]="!grupo.ativo">
+              {{grupo.ativo ? 'Ativo' : 'Inativo'}}
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acoes">
+          <th mat-header-cell *matHeaderCellDef>Ações</th>
+          <td mat-cell *matCellDef="let grupo">
+            <button mat-icon-button (click)="editarGrupo(grupo)" color="primary">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button (click)="excluir(grupo.id)" color="warn">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+
+    <!-- Formulário de Edição -->
+    <div class="edicao-container" [@slideAnimation]="slideState" *ngIf="modoEdicao">
+      <form [formGroup]="form" (ngSubmit)="salvar()">
+        <div class="form-content">
+          <div class="form-row">
+            <mat-form-field appearance="outline">
+              <mat-label>Nome</mat-label>
+              <input matInput formControlName="nome">
+              <mat-error>{{getErrorMessage('nome')}}</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline">
+              <mat-label>Descrição</mat-label>
+              <textarea matInput formControlName="descricao" rows="3"></textarea>
+              <mat-error>{{getErrorMessage('descricao')}}</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline">
+              <mat-label>Permissões</mat-label>
+              <mat-select formControlName="permissoes" multiple>
+                <mat-option *ngFor="let permissao of permissoes" [value]="permissao.id">
+                  <div class="permissao-option">
+                    <span class="permissao-nome">{{permissao.nome}}</span>
+                  </div>
+                </mat-option>
+              </mat-select>
+              <mat-error>{{getErrorMessage('permissoes')}}</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="form-row toggle-row">
+            <mat-slide-toggle formControlName="ativo" color="primary">
+              Grupo Ativo
+            </mat-slide-toggle>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button mat-stroked-button type="button" (click)="voltarLista()">
+            CANCELAR
+          </button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+            SALVAR
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

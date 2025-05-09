@@ -1,0 +1,38 @@
+<div class="overview-container">
+  <div class="header">
+    <h1>Overview | rampas</h1>
+    <div class="controls">
+      <span class="percentage">%</span>
+      <span class="cxs">CXS</span>
+    </div>
+  </div>
+
+  <div class="rampas-grid">
+    <div class="rampa-card" *ngFor="let rampa of rampas">
+      <div class="card-header">
+        <h2>Rampa {{rampa.number}}</h2>
+      </div>
+      <div class="card-content">
+        <div class="info-row">
+          <span class="label">Nº EMBARQUE</span>
+          <span class="value">{{rampa.embarque}}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">CLIENTE</span>
+          <span class="value">{{rampa.cliente}}</span>
+        </div>
+        <div class="progress-circle">
+          <svg viewBox="0 0 100 100">
+            <circle class="progress-background" cx="50" cy="50" r="40" />
+            <circle class="progress-value"
+                    cx="50"
+                    cy="50"
+                    r="40"
+                    [style.strokeDasharray]="calculateStrokeDasharray(rampa.percentage)" />
+            <text class="percentage-text">{{rampa.percentage}}%</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,56 @@
+<div class="separacao-container">
+  <div class="header">
+    <h1>Detalhamento | Separação</h1>
+  </div>
+
+  <div class="status-cards">
+    <div class="status-card">
+      <span class="label">Rejeito no read</span>
+      <span class="value">{{getRejeitoNoReadTotal()}}</span>
+      <span class="sub-label">Pendente</span>
+    </div>
+  </div>
+
+  <div class="table-container" *ngIf="separacaoInfo">
+    <table>
+      <thead>
+        <tr>
+          <th>SKU</th>
+          <th>QNTD. ESPERADA</th>
+          <th>QNTD. INDUZIDA(WMS)</th>
+          <th>% IND</th>
+          <th>QNTD. RECEBIDA</th>
+          <th>% REC</th>
+          <th>ÚLTIMA CAIXA(min)</th>
+          <th>DESCRIÇÃO</th>
+          <th>QNTD. REJEITO FINAL</th>
+          <th>QNTD. REJEITO NOREAD</th>
+          <th>PENDENTE</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of separacaoInfo.itens">
+          <td>{{item.sku}}</td>
+          <td>{{item.quantidadeEsperada}}</td>
+          <td>{{item.quantidadeInduzida}}</td>
+          <td>{{item.percentualInd}}%</td>
+          <td>{{item.quantidadeRecebida}}</td>
+          <td>{{item.percentualRec}}%</td>
+          <td [ngClass]="{'alert': item.tempoUltimaCaixa > 30}">
+            {{item.tempoUltimaCaixa}}
+          </td>
+          <td>{{item.descricao}}</td>
+          <td [ngClass]="{'warning': item.quantidadeRejeitoFinal > 0}">
+            {{item.quantidadeRejeitoFinal}}
+          </td>
+          <td [ngClass]="{'warning': item.quantidadeRejeitoNoRead > 0}">
+            {{item.quantidadeRejeitoNoRead}}
+          </td>
+          <td [ngClass]="{'alert': item.pendente > 0}">
+            {{item.pendente}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

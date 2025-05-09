@@ -1,0 +1,135 @@
+<!-- usuario.component.html -->
+<div class="usuario-container">
+  <div class="header">
+    <h1>Cadastro de Usuários</h1>
+    <button mat-raised-button
+            color="primary"
+            *ngIf="!modoEdicao"
+            [appPermission]="'USUARIO_CREATE'"
+            (click)="novoUsuario()">
+      NOVO USUÁRIO
+    </button>
+  </div>
+
+  <div class="content-wrapper">
+    <!-- Lista de Usuários -->
+    <div class="lista-container" [@slideAnimation]="slideState" *ngIf="!modoEdicao">
+      <table mat-table [dataSource]="usuarios">
+        <ng-container matColumnDef="nome">
+          <th mat-header-cell *matHeaderCellDef>Nome</th>
+          <td mat-cell *matCellDef="let usuario">{{usuario.nome}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef>Email</th>
+          <td mat-cell *matCellDef="let usuario">{{usuario.email}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="login">
+          <th mat-header-cell *matHeaderCellDef>Login</th>
+          <td mat-cell *matCellDef="let usuario">{{usuario.login}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="grupo">
+          <th mat-header-cell *matHeaderCellDef>Grupo</th>
+          <td mat-cell *matCellDef="let usuario">{{usuario.grupo}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="ativo">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let usuario">
+            <span class="status-badge" [class.ativo]="usuario.ativo" [class.inativo]="!usuario.ativo">
+              {{usuario.ativo ? 'Ativo' : 'Inativo'}}
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="ultimoAcesso">
+          <th mat-header-cell *matHeaderCellDef>Último Acesso</th>
+          <td mat-cell *matCellDef="let usuario">
+            {{usuario.ultimoAcesso | date:'dd/MM/yyyy HH:mm'}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acoes">
+          <th mat-header-cell *matHeaderCellDef>Ações</th>
+          <td mat-cell *matCellDef="let usuario">
+            <button mat-icon-button (click)="editarUsuario(usuario)" color="primary">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button (click)="excluir(usuario.id)" color="warn">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+
+    <!-- Formulário de Edição -->
+    <div class="edicao-container" [@slideAnimation]="slideState" *ngIf="modoEdicao">
+      <form [formGroup]="form" (ngSubmit)="salvar()">
+        <div class="form-content">
+          <div class="form-row">
+            <mat-form-field appearance="outline">
+              <mat-label>Nome</mat-label>
+              <input matInput formControlName="nome">
+              <mat-error>{{getErrorMessage('nome')}}</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline">
+              <mat-label>Email</mat-label>
+              <input matInput formControlName="email" type="email">
+              <mat-error>{{getErrorMessage('email')}}</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="form-row form-grid-2">
+            <mat-form-field appearance="outline">
+              <mat-label>Login</mat-label>
+              <input matInput formControlName="login">
+              <mat-error>{{getErrorMessage('login')}}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Senha</mat-label>
+              <input matInput formControlName="senha" type="password">
+              <mat-error>{{getErrorMessage('senha')}}</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline">
+              <mat-label>Grupo</mat-label>
+              <mat-select formControlName="grupo">
+                <mat-option *ngFor="let grupo of grupos" [value]="grupo">
+                  {{grupo}}
+                </mat-option>
+              </mat-select>
+              <mat-error>{{getErrorMessage('grupo')}}</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="form-row toggle-row">
+            <mat-slide-toggle formControlName="ativo" color="primary">
+              Usuário Ativo
+            </mat-slide-toggle>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button mat-stroked-button type="button" (click)="voltarLista()">
+            CANCELAR
+          </button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+            SALVAR
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
