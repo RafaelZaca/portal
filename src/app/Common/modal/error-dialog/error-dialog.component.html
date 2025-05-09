@@ -1,0 +1,29 @@
+<div class="message-header">
+  <h1 style="color: white; display: flex; align-items: center; justify-content: center;">
+    <mat-icon>
+      {{icon}}
+    </mat-icon>
+    &nbsp; {{name}}
+  </h1>
+</div>
+<div class="container-fluid mt-5">
+    <div class="row mb-3">
+        <div class="col-12 d-flex justify-content-center">
+            <h1 mat-dialog-title>
+                {{title}}
+            </h1>
+        </div>
+        <div class="col-12 d-flex justify-content-center">
+            <div mat-dialog-content>
+                <p>{{message}}</p>
+            </div>
+        </div>
+        <div class="col-12 d-flex justify-content-center">
+            <div mat-dialog-actions>
+                <!--<button *ngIf="reload" mat-stroked-button class="btn-white" (click)="onDismiss()"><span class="material-icons-outlined">refresh</span> Atualizar</button>-->
+                <button *ngIf="back" mat-flat-button (click)="onVoltar()"><mat-icon>arrow_back</mat-icon> Voltar</button>
+                <button *ngIf="close" mat-flat-button (click)="onDismiss()"><mat-icon>close</mat-icon> Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>

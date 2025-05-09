@@ -1,0 +1,72 @@
+<!-- default.component.html -->
+<div class="app-container">
+  <div *ngIf="isLoading" class="loading-overlay">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <nav *ngIf="!isLoading && menuLoaded" class="main-nav">
+    <div class="nav-content">
+      <!-- Logo or brand -->
+      <div class="brand">
+        <img src="assets/logo.png" alt="Logo" class="logo">
+      </div>
+
+      <!-- Navigation items -->
+      <!-- default.component.html - Ajustes nos itens do menu -->
+      <ul class="nav-items">
+        <li *ngFor="let item of filteredMenuItems"
+            class="nav-item"
+            [class.active]="isDropdownActive(item.label)"
+            (mouseenter)="toggleDropdown(item.label); cancelCloseDropdown()"
+            (mouseleave)="startCloseDropdown()">
+          <a [routerLink]="item.route" class="nav-link">
+            <span>{{item.label}}</span>
+            <i class="arrow-icon" *ngIf="item.children"></i>
+          </a>
+
+          <!-- Dropdown menu (level 2) -->
+          <div class="dropdown-menu"
+               *ngIf="item.children && isDropdownActive(item.label)"
+               (mouseenter)="cancelCloseDropdown()"
+               (mouseleave)="startCloseDropdown()">
+            <ng-container *ngFor="let child of item.children">
+              <a [routerLink]="child.route"
+                 class="dropdown-item"
+                 routerLinkActive="active"
+                 (mouseenter)="setActiveChild(child)"
+                 (mouseleave)="clearActiveChild()">
+                {{child.label}}
+                <i class="arrow-icon" *ngIf="child.children"></i>
+              </a>
+
+              <!-- Level 3 menu -->
+              <div *ngIf="child.children && activeChild === child"
+                   class="sub-dropdown-menu"
+                   (mouseenter)="cancelCloseDropdown()"
+                   (mouseleave)="startCloseDropdown()">
+                <a *ngFor="let subChild of child.children"
+                   [routerLink]="subChild.route"
+                   class="dropdown-item"
+                   routerLinkActive="active"
+                   (click)="$event.stopPropagation()">
+                  {{subChild.label}}
+                </a>
+              </div>
+            </ng-container>
+          </div>
+        </li>
+      </ul>
+
+      <!-- User info/profile -->
+      <div class="user-info">
+        <span class="username">{{_name}}</span>
+        <button class="logout-btn" (click)="logout()">Sair</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main content area -->
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>
