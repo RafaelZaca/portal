@@ -1,0 +1,86 @@
+# Docker
+# Build and push an image to Azure Container Registry
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+- master
+
+resources:
+- repo: self
+
+variables:
+  # Container registry service connection established during pipeline creation
+  dockerRegistryServiceConnection: 'b46b18a5-f473-4c10-8dd2-0aad41e22ded'
+  imageRepository: 'wcspgportal'
+  containerRegistry: 'argusregistry.azurecr.io'
+  dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
+  tag: '$(Build.BuildId)'
+  # Defina o valor diretamente aqui para fins de teste (substituir por um novo token)
+  # Depois, mova para variáveis seguras
+  githubToken: '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'
+
+  # Agent VM image name
+  vmImageName: 'ubuntu-latest'
+
+stages:
+- stage: Build
+  displayName: Build and push stage
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    # Espelhar usando checkout explícito
+    - checkout: self
+      persistCredentials: true
+      fetchDepth: 0
+
+    # Espelhar apenas a branch master
+    - bash: |
+        echo "Configurando git..."
+        git config --global user.email "azure-pipeline@zcksoftware.com.br"
+        git config --global user.name "Azure Pipeline"
+        
+        echo "Verificando status atual..."
+        git status
+        
+        echo "Listando branches..."
+        git branch -a
+        
+        echo "Arquivo presente na pasta atual..."
+        ls -la
+        
+        echo "Verificando se estamos em um repositório Git..."
+        if [ -d .git ]; then
+          echo "Estamos em um repositório Git"
+        else
+          echo "NÃO estamos em um repositório Git!"
+        fi
+        
+        echo "Verificando credenciais atuais..."
+        git config --list | grep -i 'url\|user\|email'
+        
+        echo "Adicionando remote do GitHub..."
+        git remote add github https://$(githubToken)@github.com/RafaelZaca/WCS_PG_Portal.git || echo "Remote já existe ou erro ao adicionar"
+        
+        echo "Verificando remotes configurados..."
+        git remote -v
+        
+        echo "Tentando checkout da branch master..."
+        git checkout master || git checkout -b master
+        
+        echo "Enviando conteúdo atual para o GitHub..."
+        git push -f github HEAD:refs/heads/master
+      displayName: 'Espelhar branch master para GitHub'
+    
+    # Build e push da imagem Docker
+    - task: Docker@2
+      displayName: Build and push an image to container registry
+      inputs:
+        command: buildAndPush
+        repository: $(imageRepository)
+        dockerfile: $(dockerfilePath)
+        containerRegistry: $(dockerRegistryServiceConnection)
+        tags: |
+          $(tag)
